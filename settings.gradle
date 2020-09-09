@@ -1,0 +1,4 @@
+include ':okmock-interceptor'
+include ':okmock-server'
+include ':samples:app'
+rootProject.name = "OkMock"
