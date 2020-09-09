@@ -17,7 +17,9 @@ class WriterThread(
         try {
             val writer = PrintWriter(socket.getOutputStream(), true)
             while (!isInterrupted) {
-                writer.println(queue.take())
+                if (queue.isEmpty().not()) {
+                    writer.println(queue.take())
+                }
             }
         } catch (e: IOException) {
             onError(e)

@@ -15,9 +15,7 @@ class OkMockServerImpl(
     private val listeners = mutableSetOf<(String) -> Unit>()
 
     override fun start() {
-        if (connectionThread != null) {
-            return
-        }
+        if (connectionThread != null) return
 
         val connectionThread = ConnectionThread(
             port = port,
@@ -27,8 +25,6 @@ class OkMockServerImpl(
 
         this.connectionThread = connectionThread
         connectionThread.start()
-
-        Log.d("OkMock", "Waiting for connection…")
     }
 
     override fun stop() {
@@ -63,7 +59,7 @@ class OkMockServerImpl(
     }
 
     private fun onRead(string: String) {
-        Log.d("OkMock", string)
+        Log.d("OkMock", "onRead: $string")
         listeners.forEach {
             it.invoke(string)
         }

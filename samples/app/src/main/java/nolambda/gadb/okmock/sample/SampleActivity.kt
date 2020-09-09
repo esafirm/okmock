@@ -5,7 +5,6 @@ import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_sample.*
 import nolambda.gadb.okmock.OkMock
-import nolambda.gadb.okmock.server.OkMockServerImpl
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import kotlin.concurrent.thread
@@ -15,12 +14,8 @@ class SampleActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sample)
 
-        val server = OkMockServerImpl()
-
-        server.start()
-
         val client = OkHttpClient.Builder()
-            .addInterceptor(OkMock(server))
+            .addInterceptor(OkMock())
             .build()
 
         btnRequest.setOnClickListener {
