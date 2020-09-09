@@ -1,4 +1,4 @@
-package nolambda.gadb.okmock.parser
+package nolambda.gadb.okmock.adapter
 
 data class OkMockPayload(
     val path: Regex,

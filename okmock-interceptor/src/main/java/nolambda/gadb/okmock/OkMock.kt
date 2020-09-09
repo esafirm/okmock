@@ -1,8 +1,9 @@
 package nolambda.gadb.okmock
 
-import nolambda.gadb.okmock.parser.OkMockPayload
-import nolambda.gadb.okmock.parser.Parser
-import nolambda.gadb.okmock.parser.PayloadParser
+import nolambda.gadb.okmock.adapter.DefaultSerializer
+import nolambda.gadb.okmock.adapter.OkMockAdapter
+import nolambda.gadb.okmock.adapter.OkMockPayload
+import nolambda.gadb.okmock.adapter.PayloadParser
 import nolambda.gadb.okmock.server.OkMockServer
 import nolambda.gadb.okmock.server.OkMockServerImpl
 import okhttp3.Interceptor
@@ -14,13 +15,20 @@ import okhttp3.ResponseBody.Companion.toResponseBody
 
 class OkMock(
     okMockServer: OkMockServer = OkMockServerImpl(),
-    parser: Parser = PayloadParser()
+    adapter: OkMockAdapter = OkMockAdapter(
+        parser = PayloadParser(),
+        serializer = DefaultSerializer()
+    )
 ) : Interceptor {
+
+    private val sender = { req: Request, payload: OkMockPayload ->
+        okMockServer.send(adapter.serializer.serialize(req, payload))
+    }
 
     init {
         okMockServer.start()
         okMockServer.listen {
-            registerMockResponse(parser.parse(it))
+            registerMockResponse(adapter.parser.parse(it))
         }
     }
 
@@ -33,7 +41,11 @@ class OkMock(
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
-        return getMockResponse(request) ?: return chain.proceed(request)
+        val (payload, mockResponse) = getMockResponse(request) ?: return chain.proceed(request)
+
+        sender(request, payload)
+
+        return mockResponse
     }
 
     private fun getMockOrNull(info: PartialRequestInfo): OkMockPayload? {
@@ -44,7 +56,7 @@ class OkMock(
         return mockResponses.find { it.path.matches(url) }
     }
 
-    private fun getMockResponse(request: Request): Response? {
+    private fun getMockResponse(request: Request): Pair<OkMockPayload, Response>? {
         val url: String = request.url.toString()
         val method: String = request.method
         val partialRequest = PartialRequestInfo(url, method)
@@ -62,6 +74,6 @@ class OkMock(
         payload.headers.forEach {
             builder.header(it.key, it.value)
         }
-        return builder.build()
+        return payload to builder.build()
     }
 }

@@ -5,4 +5,5 @@ interface OkMockServer {
     fun stop()
 
     fun listen(onRead: (String) -> Unit)
+    fun send(data: String)
 }

@@ -38,6 +38,12 @@ class OkMockServerImpl(
         listeners.add(onRead)
     }
 
+    override fun send(data: String) {
+        clients.forEach {
+            it.value.writer.write(data)
+        }
+    }
+
     private fun onClientConnected(socket: Socket) {
         Log.d("OkMock", "client connected")
 
