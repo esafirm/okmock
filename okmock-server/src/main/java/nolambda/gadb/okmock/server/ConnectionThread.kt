@@ -9,7 +9,7 @@ import kotlin.concurrent.thread
 internal class ConnectionThread(
     private val port: Int,
     private val onClientConnected: (Socket) -> Unit,
-    private val onError: (IOException) -> Unit
+    private val onError: (Exception) -> Unit
 ) : Thread() {
 
     @Volatile

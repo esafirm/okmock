@@ -12,7 +12,7 @@ class OkMockServerImpl(
     private var connectionThread: ConnectionThread? = null
     private val clients: MutableMap<Socket, Client> = mutableMapOf()
 
-    private val listeners = mutableSetOf<(String) -> Unit>()
+    private val listeners = mutableListOf<Pair<String, (String) -> Unit>>()
 
     override fun start() {
         if (connectionThread != null) return
@@ -34,8 +34,8 @@ class OkMockServerImpl(
         clients.clear()
     }
 
-    override fun listen(onRead: (String) -> Unit) {
-        listeners.add(onRead)
+    override fun listen(channel: String, onRead: (String) -> Unit) {
+        listeners.add(channel to onRead)
     }
 
     override fun send(data: String) {
@@ -66,8 +66,16 @@ class OkMockServerImpl(
 
     private fun onRead(string: String) {
         Log.d("OkMock", "onRead: $string")
-        listeners.forEach {
-            it.invoke(string)
+        try {
+            val (channel, payload) = string.parse()
+
+            listeners.forEach {
+                if (it.first == channel) {
+                    it.second.invoke(payload)
+                }
+            }
+        } catch (e: Exception) {
+            onError(e)
         }
     }
 
@@ -91,8 +99,15 @@ class OkMockServerImpl(
         }
     }
 
-    private fun onError(error: IOException) {
+    private fun onError(error: Exception) {
         Log.e("OkMock", "error: $error")
+    }
+
+    private fun String.parse(): Pair<String, String> {
+        val separatorIndex = indexOf(SEPARATOR)
+        val channel = substring(0, separatorIndex)
+        val payload = substring(separatorIndex + SEPARATOR_LENGTH)
+        return channel to payload
     }
 
     private class Client(
@@ -100,4 +115,9 @@ class OkMockServerImpl(
         val reader: ReaderThread,
         val writer: WriterThread
     )
+
+    companion object {
+        private const val SEPARATOR = "|"
+        private const val SEPARATOR_LENGTH = 1
+    }
 }

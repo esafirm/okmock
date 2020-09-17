@@ -32,7 +32,7 @@ OkHttpClient.Builder()
   }
 }
 ```
-
+E
 2. Run `gadb mock`
 
 That's it! Now every time a request is matching the `path` and `method`, your request will return `body`

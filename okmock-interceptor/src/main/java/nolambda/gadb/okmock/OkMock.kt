@@ -21,14 +21,22 @@ class OkMock(
     )
 ) : Interceptor {
 
+    companion object {
+        private const val CHANNEL_MOCK = "mock"
+        private const val CHANNEL_CLEAR = "clear"
+    }
+
     private val sender = { req: Request, payload: OkMockPayload ->
         okMockServer.send(adapter.serializer.serialize(req, payload))
     }
 
     init {
         okMockServer.start()
-        okMockServer.listen {
+        okMockServer.listen(CHANNEL_MOCK) {
             registerMockResponse(adapter.parser.parse(it))
+        }
+        okMockServer.listen(CHANNEL_CLEAR) {
+            registerMockResponse(emptyList())
         }
     }
 
