@@ -11,6 +11,21 @@ OkHttp interceptor for mocking Android request
 ### Android Side
 
 1. Add `OkMock` as your dependency
+
+```groovy
+allprojects {
+  repositories {
+    ...
+    maven { url 'https://jitpack.io' }
+  }
+}
+```
+```
+dependencies {
+  implementation 'com.github.esafirm:okmock:1.0.0'
+}
+```
+
 2. Add `OkMock` as `OkHttp` application interceptor
 
 ```kotlin
