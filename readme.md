@@ -21,7 +21,7 @@ OkHttpClient.Builder()
 
 ### Desktop Side
 
-1. After install `gadb`, create mock file with prefix `mock_`
+1. After install `gadb`, create mock file
 
 ```json
 {
@@ -32,8 +32,8 @@ OkHttpClient.Builder()
   }
 }
 ```
-E
-2. Run `gadb mock`
+
+2. Run `gadb mock -f <file>`
 
 That's it! Now every time a request is matching the `path` and `method`, your request will return `body`
 
