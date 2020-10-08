@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sample/http_request.dart';
 
 void main() {
   runApp(MyApp());
@@ -57,6 +58,8 @@ class _MyHomePageState extends State<MyHomePage> {
       // called again, and so nothing would appear to happen.
       _counter++;
     });
+
+    getHttp();
   }
 
   @override
