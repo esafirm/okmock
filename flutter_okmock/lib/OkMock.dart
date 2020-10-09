@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'OkMockAdapter.dart';
 import 'OkMockPayload.dart';
 import 'OkMockServer.dart';
+import 'PartialRequestInfo.dart';
 
 class OkMock extends Interceptor {
   static const String CHANNEL_MOCK = "mock";
