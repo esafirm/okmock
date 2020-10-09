@@ -1,14 +1,51 @@
-# flutter_okmock
+## OkMock
 
-A new Flutter package project.
+Dio interceptor for mocking HTTP request in Flutter
 
-## Getting Started
+## Prerequisite
 
-This project is a starting point for a Dart
-[package](https://flutter.dev/developing-packages/),
-a library module containing code that can be shared easily across
-multiple Flutter or Dart projects.
+- [gadb](https://github.com/esafirm/gadb)
 
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.dev/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+## Quick Start
+
+### Flutter Side
+
+1. Add `OkMock` as your dependency
+
+```groovy
+dependencies:
+  okmock: "0.0.1"
+```
+
+2. Add `OkMock` as `Dio` interceptor
+
+```dart
+dio = Dio();
+dio.interceptors.add(OkMock.createDefault(dio));
+```
+
+### Desktop Side
+
+1. After install `gadb`, create mock file in json or yaml
+
+```json
+{
+  "path": "*google.com*",
+  "method": "GET",
+  "body": {
+    "message": "hello mock"
+  }
+}
+```
+
+2. Run `gadb mock -f <file>`
+
+That's it! Now every time a request is matching the `path` and `method`, your request will return `body`
+
+## Example
+
+You can also check out the [flutter app example](https://github.com/esafirm/okmock/tree/master/flutter_sample)
+
+## License
+
+MIT @ Esa Firman
