@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 import 'package:sample/OkMock.dart';
-import 'package:sample/OkMockServer.dart';
 
 Dio _dio;
 
@@ -16,7 +15,7 @@ void getHttp() async {
 Dio getDio() {
   if (_dio == null) {
     _dio = Dio();
-    _dio.interceptors.add(OkMock(dio: _dio, server: OkMockServerImpl()));
+    _dio.interceptors.add(OkMock.createDefault(_dio));
   }
   return _dio;
 }

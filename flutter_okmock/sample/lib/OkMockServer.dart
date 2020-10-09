@@ -51,7 +51,6 @@ class OkMockServerImpl extends OkMockServer {
 
   void _onRead(String data) {
     print("OnRead: " + data);
-    print("Listeners: " + listeners.toString());
 
     List channelAndPayload = _parseMessage(data);
     String channel = channelAndPayload[0];

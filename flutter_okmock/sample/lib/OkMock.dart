@@ -55,7 +55,14 @@ class OkMock extends Interceptor {
     if (payload != null) {
       server.send(adapter.serializer.serialize(options, payload));
 
-      return dio.resolve(payload.body);
+      Response response = await dio.resolve(payload.body);
+
+      payload.headers = new Map();
+      payload.headers.forEach((key, value) {
+        response.headers.add(key, value);
+      });
+
+      return response;
     }
     return options;
   }
@@ -69,7 +76,10 @@ class OkMock extends Interceptor {
     print("=> method $method url: $url");
 
     PartialRequestInfo info = PartialRequestInfo(method: method, url: url);
-    return mockResponses.singleWhere(
-        (element) => element.method == info.method && element.path == info.url);
+    OkMockPayload payload = mockResponses.firstWhere((element) {
+      return element.method == info.method && element.path.hasMatch(info.url);
+    }, orElse: () => null);
+
+    return payload;
   }
 }
