@@ -22,7 +22,7 @@ environment:
 
 dependencies:
   okmock:
-    path: ../.
+    path: ../flutter_okmock
   flutter:
     sdk: flutter
 

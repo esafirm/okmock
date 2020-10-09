@@ -2,7 +2,8 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:intl/intl.dart';
-import 'package:sample/OkMockPayload.dart';
+
+import 'OkMockPayload.dart';
 
 abstract class Deserializer {
   List<OkMockPayload> deserialize(String data);

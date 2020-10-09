@@ -105,7 +105,7 @@ packages:
   okmock:
     dependency: "direct main"
     description:
-      path: ".."
+      path: "../flutter_okmock"
       relative: true
     source: path
     version: "0.0.1"

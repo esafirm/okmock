@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:sample/OkMock.dart';
+import 'package:okmock/OkMock.dart';
 
 Dio _dio;
 
