@@ -21,8 +21,8 @@ environment:
   sdk: '>=2.7.0 <3.0.0'
 
 dependencies:
-  dio: 3.0.10
-  intl: ^0.16.1
+  okmock:
+    path: ../.
   flutter:
     sdk: flutter
 
