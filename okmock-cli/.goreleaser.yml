@@ -32,7 +32,7 @@ brews:
   - tap:
       owner: esafirm
       name: homebrew-tap
-    description: Golang ADB wrapper providing all ADB features and more
+    description: HTTP(s) request mocker for Android (OkHttp) and Flutter (Dio)
     folder: Formula
     homepage: https://github.com/esafirm/homebrew-tap
 
