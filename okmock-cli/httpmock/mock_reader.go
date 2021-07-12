@@ -9,13 +9,21 @@ import (
 	"strings"
 )
 
-type MockContext struct {
-	Path   string      `json:"path" yaml:"path"`
-	Method string      `json:"method" yaml:"method"`
+type MockMatcher struct {
+	Path   string `json:"path" yaml:"path"`
+	Method string `json:"method" yaml:"method"`
+}
+
+type MockResponse struct {
 	Code   string      `json:"code" yaml:"code"`
 	Body   interface{} `json:"body" yaml:"body"`
 	Header interface{} `json:"header" yaml:"header"`
-	Raw    string
+}
+
+type MockContext struct {
+	Matcher MockMatcher  `json:"matcher" yaml:"matcher"`
+	Mock    MockResponse `json:"mock" yaml:"mock"`
+	Raw     string       `json:"-" yaml:"-"`
 }
 
 func ReadMockFile(path string) ([]MockContext, error) {
