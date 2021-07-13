@@ -1,7 +1,6 @@
 package nolambda.gadb.okmock.server
 
 import android.util.Log
-import java.io.IOException
 import java.net.Socket
 import kotlin.concurrent.thread
 
@@ -101,6 +100,7 @@ class OkMockServerImpl(
 
     private fun onError(error: Exception) {
         Log.e("OkMock", "error: $error")
+        error.printStackTrace()
     }
 
     private fun String.parse(): Pair<String, String> {
