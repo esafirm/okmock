@@ -3,10 +3,10 @@ import 'package:okmock/OkMock.dart';
 
 Dio _dio;
 
-void getHttp() async {
+dynamic getHttp() async {
   try {
     Response response = await getDio().get("http://www.google.com");
-    print(response);
+    return response.data;
   } catch (e) {
     print(e);
   }

@@ -1,0 +1,16 @@
+{
+  "matcher": {
+    "path": "*google.com*",
+    "method": "GET"
+  },
+  "mock": {
+    "method": "GET",
+    "code": 200,
+    "header": {
+      "WWW-gabut-ga": "yes"
+    },
+    "body": {
+      "message": "hello mock"
+    }
+  }
+}
