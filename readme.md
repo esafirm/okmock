@@ -1,5 +1,4 @@
-![OkMock Banner](https://user-images.githubusercontent.com/1691440/125498831-93a9707a-43b5-4c6e-90f3-e37c268fd719.png)
-
+![OkMock Banner](https://user-images.githubusercontent.com/1691440/125499643-4da40632-9e3d-493f-8c19-502f8e465a15.png)
 
 ## OkMock
 
