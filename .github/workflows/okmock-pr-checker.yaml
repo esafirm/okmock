@@ -51,7 +51,7 @@ jobs:
 
       - name:
         run: |
-          flutter pub get
-          flutter build apk
+          cd flutter_okmock
+          flutter analyzer
 
     
