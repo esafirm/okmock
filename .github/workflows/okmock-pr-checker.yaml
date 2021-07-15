@@ -52,6 +52,5 @@ jobs:
       - name:
         run: |
           cd flutter_okmock
-          flutter analyzer
-
-    
+          flutter pub publish --dry-run
+          flutter test
