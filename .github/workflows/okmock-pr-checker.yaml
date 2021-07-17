@@ -49,7 +49,7 @@ jobs:
         with:
           flutter-version: '2.0.5'
 
-      - name:
+      - name: Check Flutter
         run: |
           cd flutter_okmock
           flutter pub publish --dry-run
