@@ -1,7 +1,6 @@
 name: okmock
 description: HTTP interceptor for mocking Android and Flutter requests
 version: 0.0.1
-author: esafirm
 homepage: https://nolambda.stream
 
 environment:
