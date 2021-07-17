@@ -57,11 +57,11 @@ class OkMock(
     }
 
     private fun getMockOrNull(info: PartialRequestInfo): OkMockPayload? {
-        val haveMethod = mockResponses.any { it.method == info.method }
+        val haveMethod = mockResponses.any { it.matcher.method == info.method }
         if (haveMethod.not()) return null
 
         val url = info.url
-        return mockResponses.find { it.path.matches(url) }
+        return mockResponses.find { it.matcher.path.matches(url) }
     }
 
     private fun getMockResponse(request: Request): Pair<OkMockPayload, Response>? {
@@ -69,17 +69,18 @@ class OkMock(
         val method: String = request.method
         val partialRequest = PartialRequestInfo(url, method)
         val payload = getMockOrNull(partialRequest) ?: return null
-        val responseBody = payload.body.toResponseBody("application/text".toMediaTypeOrNull())
+        val mockPayload = payload.mock
+        val responseBody = mockPayload.body.toResponseBody("application/text".toMediaTypeOrNull())
 
         val builder: Response.Builder = Response.Builder()
             .request(request)
             .protocol(Protocol.HTTP_1_1)
-            .code(payload.code)
-            .message(payload.message)
+            .code(mockPayload.code)
+            .message(mockPayload.message)
             .receivedResponseAtMillis(System.currentTimeMillis())
             .body(responseBody)
 
-        payload.headers.forEach {
+        mockPayload.headers.forEach {
             builder.header(it.key, it.value)
         }
         return payload to builder.build()

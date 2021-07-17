@@ -13,19 +13,14 @@ class OkMock extends Interceptor {
   OkMockServer server;
   OkMockAdapter adapter;
 
-  List<OkMockPayload> mockResponses = new List();
+  List<OkMockPayload> mockResponses = [];
 
   OkMock({Dio dio, OkMockServer server, OkMockAdapter adapter}) {
     _init(dio, server, adapter);
   }
 
   OkMock.createDefault(Dio dio) {
-    _init(
-        dio,
-        OkMockServerImpl(),
-        OkMockAdapter(
-            deserializer: PayloadDeserializer(),
-            serializer: DefaultSerializer()));
+    _init(dio, OkMockServerImpl(), OkMockAdapter(deserializer: PayloadDeserializer(), serializer: DefaultSerializer()));
   }
 
   void _init(Dio dio, OkMockServerImpl server, OkMockAdapter adapter) {
@@ -56,10 +51,10 @@ class OkMock extends Interceptor {
     if (payload != null) {
       server.send(adapter.serializer.serialize(options, payload));
 
-      Response response = await dio.resolve(payload.body);
+      Mock mockPayload = payload.mock;
+      Response response = await dio.resolve(mockPayload.body);
 
-      payload.headers = new Map();
-      payload.headers.forEach((key, value) {
+      mockPayload.headers.forEach((key, value) {
         response.headers.add(key, value);
       });
 
@@ -78,7 +73,7 @@ class OkMock extends Interceptor {
 
     PartialRequestInfo info = PartialRequestInfo(method: method, url: url);
     OkMockPayload payload = mockResponses.firstWhere((element) {
-      return element.method == info.method && element.path.hasMatch(info.url);
+      return element.matcher.method == info.method && element.matcher.path.hasMatch(info.url);
     }, orElse: () => null);
 
     return payload;

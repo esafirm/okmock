@@ -34,7 +34,7 @@ class DefaultSerializer extends Serializer {
   @override
   String serialize(RequestOptions options, OkMockPayload payload) {
     String time = format.format(DateTime.now());
-    return "$time - Intercept ${options.uri.path} by ${payload.path}";
+    return "$time - Intercept ${options.uri.path} by ${payload.matcher.path}";
   }
 }
 

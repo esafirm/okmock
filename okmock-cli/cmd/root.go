@@ -19,13 +19,10 @@ var rootCmd = &cobra.Command{
 	Long:  `OkMock is a tool to mock HTTP(s) responses for Okhttp interceptor in Android or Dio in Flutter`,
 	Args:  cobra.MaximumNArgs(0),
 	Run: func(cmd *cobra.Command, args []string) {
-		forwardList := adb.ForwardList()
 
 		// Handle blank
-		if len(forwardList.Output) <= 1 {
-			fmt.Printf("Forwarding port to %d", forwardList)
-			adb.Forward(httpmock.DEFAULT_PORT)
-		}
+		fmt.Printf("Forwarding port to %s", httpmock.DEFAULT_PORT)
+		adb.Forward(httpmock.DEFAULT_PORT)
 
 		if &dir == nil || len(dir) == 0 {
 			currentDir, _ := os.Getwd()

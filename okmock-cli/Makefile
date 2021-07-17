@@ -6,4 +6,4 @@ build:
 buildbin: 
 	go build -o $(BIN_PATH)
 run: 
-	@go run main.go -d mocksamples
+	@go run main.go -f mocksamples/

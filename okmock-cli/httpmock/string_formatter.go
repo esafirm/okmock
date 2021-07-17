@@ -21,3 +21,7 @@ func YamlToJsonString(data []byte) string {
 	CheckErr(err)
 	return string(data)
 }
+
+func objectToYaml(obj interface{}) ([]byte, error) {
+	return yaml.Marshal(obj)
+}

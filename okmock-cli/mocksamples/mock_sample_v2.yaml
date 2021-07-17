@@ -1,0 +1,7 @@
+matcher:
+  path: '*google.com*'
+  method: GET
+mock:
+  code: 200
+  header: { 'WWW-from-okmock': true }
+  body: { 'message': 'hello mock' }

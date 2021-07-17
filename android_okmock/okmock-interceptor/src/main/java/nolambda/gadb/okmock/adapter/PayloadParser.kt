@@ -17,14 +17,26 @@ class PayloadParser : Parser {
         val jsonList = mocks.map { JSONObject(it) }
 
         return jsonList.map {
-            val path = it.getString("path")
-            OkMockPayload(
+            val matcherJson = it.getJSONObject("matcher")
+            val mockJson = it.getJSONObject("mock")
+
+            val path = matcherJson.getString("path")
+
+            val matcher = Matcher(
                 path = Regex(createRegexFromGlob(path)),
-                body = it.getString("body"),
-                method = it.getString("method"),
-                code = it.getIntOrDefault("code", DEFAULT_CODE),
-                message = it.getStringOrDefault("message", DEFAULT_MESSAGE),
-                headers = it.getMap("header")
+                method = matcherJson.getString("method")
+            )
+
+            val mock = Mock(
+                body = mockJson.getString("body"),
+                headers = mockJson.getMap("header"),
+                code = mockJson.getIntOrDefault("code", DEFAULT_CODE),
+                message = mockJson.getStringOrDefault("message", DEFAULT_MESSAGE)
+            )
+
+            OkMockPayload(
+                matcher = matcher,
+                mock = mock
             )
         }
     }
