@@ -8,6 +8,7 @@ const (
 	CHANNEL_CLEAR     = "clear"
 	CHANNEL_MOCK      = "mock"
 	PAYLOAD_SEPARATOR = "|"
+	SEPARATOR         = "_,_"
 )
 
 func createMockPayload(mockString []string) string {

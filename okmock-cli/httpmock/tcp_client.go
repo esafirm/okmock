@@ -17,7 +17,6 @@ const (
 	DEFAULT_PORT      = "6379"
 	SERVER_ADDR       = "localhost:" + DEFAULT_PORT
 	NETWORK           = "tcp"
-	SEPARATOR         = ","
 	CONNECT_THRESHOLD = 1000
 )
 
