@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:intl/intl.dart';
 
 import 'OkMockPayload.dart';
+import 'dart:developer' as developer;
 
 abstract class Deserializer {
   List<OkMockPayload> deserialize(String data);
@@ -21,10 +22,19 @@ class PayloadDeserializer extends Deserializer {
 
   @override
   List<OkMockPayload> deserialize(String data) {
+    developer.log("data: $data");
+
     List<String> mocks = data.split(SEPARATOR);
-    List<OkMockPayload> payloads =
-        mocks.map((e) => OkMockPayload.fromJson(jsonDecode(e))).toList();
+    developer.log("mock size: ${mocks.length}");
+
+    List<OkMockPayload> payloads = mocks.map((mock) => createPayload(mock))
+        .toList();
     return payloads;
+  }
+
+  OkMockPayload createPayload(String mock) {
+    developer.log("Create payload from $mock");
+    return OkMockPayload.fromJson(jsonDecode(mock));
   }
 }
 

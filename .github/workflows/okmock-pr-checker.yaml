@@ -52,5 +52,6 @@ jobs:
       - name: Check Flutter
         run: |
           cd flutter_okmock
+          cd okmock
           flutter pub publish --dry-run
           flutter test

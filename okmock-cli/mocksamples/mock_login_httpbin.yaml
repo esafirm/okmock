@@ -1,0 +1,7 @@
+matcher:
+  path: '*httpbin.org/basic-auth/okmock/12345'
+  method: GET
+mock:
+  code: 401
+  header: { 'WWW-from-okmock': true }
+  body: { 'message': 'login failed' }

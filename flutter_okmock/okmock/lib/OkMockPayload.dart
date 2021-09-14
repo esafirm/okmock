@@ -40,13 +40,13 @@ class Mock {
   String body;
   int code;
   String message;
-  Map<String, String> headers;
+  Map<String, dynamic> headers;
 
   Mock.fromJson(Map<String, dynamic> json) {
     body = json["body"].toString();
     code = json["code"];
-    message = json["message"];
-    headers = json["headers"];
+    message = json["message"] ?? "";
+    headers = json["header"] ?? Map();
   }
 }
 
