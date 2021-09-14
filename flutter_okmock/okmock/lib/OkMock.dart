@@ -5,6 +5,8 @@ import 'OkMockPayload.dart';
 import 'OkMockServer.dart';
 import 'PartialRequestInfo.dart';
 
+import 'dart:developer' as developer;
+
 class OkMock extends Interceptor {
   static const String CHANNEL_MOCK = "mock";
   static const String CHANNEL_CLEAR = "clear";
@@ -20,7 +22,8 @@ class OkMock extends Interceptor {
   }
 
   OkMock.createDefault(Dio dio) {
-    _init(dio, OkMockServerImpl(), OkMockAdapter(deserializer: PayloadDeserializer(), serializer: DefaultSerializer()));
+    _init(dio, OkMockServerImpl(), OkMockAdapter(
+        deserializer: PayloadDeserializer(), serializer: DefaultSerializer()));
   }
 
   void _init(Dio dio, OkMockServerImpl server, OkMockAdapter adapter) {
@@ -52,10 +55,16 @@ class OkMock extends Interceptor {
       server.send(adapter.serializer.serialize(options, payload));
 
       Mock mockPayload = payload.mock;
-      Response response = await dio.resolve(mockPayload.body);
+      Response response = await dio.resolve(Response(
+          request: options,
+          data: mockPayload.body,
+          statusCode: mockPayload.code,
+          statusMessage: mockPayload.message,
+          headers: Headers()
+      ));
 
       mockPayload.headers.forEach((key, value) {
-        response.headers.add(key, value);
+        response.headers.add(key, value.toString());
       });
 
       return response;
@@ -69,11 +78,12 @@ class OkMock extends Interceptor {
     String method = options.method;
     String url = options.uri.toString();
 
-    print("=> method $method url: $url");
+    developer.log("=> method $method url: $url", name: "OkMock");
 
     PartialRequestInfo info = PartialRequestInfo(method: method, url: url);
     OkMockPayload payload = mockResponses.firstWhere((element) {
-      return element.matcher.method == info.method && element.matcher.path.hasMatch(info.url);
+      return element.matcher.method == info.method &&
+          element.matcher.path.hasMatch(info.url);
     }, orElse: () => null);
 
     return payload;

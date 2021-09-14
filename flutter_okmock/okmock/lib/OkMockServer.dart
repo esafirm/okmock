@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:developer' as developer;
 
 abstract class OkMockServer {
   void start();
@@ -50,7 +51,7 @@ class OkMockServerImpl extends OkMockServer {
   }
 
   void _onRead(String data) {
-    print("OnRead: " + data);
+    developer.log("Incoming data: $data", name: "OkMock");
 
     List channelAndPayload = _parseMessage(data);
     String channel = channelAndPayload[0];

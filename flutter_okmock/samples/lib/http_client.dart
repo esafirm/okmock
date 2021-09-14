@@ -30,4 +30,8 @@ class HttpClient {
 
     return Future.value(res);
   }
+
+  void init() {
+    HttpClient();
+  }
 }

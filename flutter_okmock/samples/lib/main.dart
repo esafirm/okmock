@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:sample/home_screen.dart';
-import 'package:sample/http_request.dart';
+import 'package:sample/http_client.dart';
 import 'package:sample/login_screen.dart';
 
 void main() {
+  HttpClient().init();
   runApp(MyApp());
 }
 
