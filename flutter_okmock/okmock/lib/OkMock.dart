@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
 
-import 'OkMockAdapter.dart';
-import 'OkMockPayload.dart';
-import 'OkMockServer.dart';
-import 'PartialRequestInfo.dart';
+import 'okmock_adapter.dart';
+import 'okmock_payload.dart';
+import 'okmock_server.dart';
+import 'partial_request.dart';
 
 import 'dart:developer' as developer;
 
@@ -22,8 +22,7 @@ class OkMock extends Interceptor {
   }
 
   OkMock.createDefault(Dio dio) {
-    _init(dio, OkMockServerImpl(), OkMockAdapter(
-        deserializer: PayloadDeserializer(), serializer: DefaultSerializer()));
+    _init(dio, OkMockServerImpl(), OkMockAdapter(deserializer: PayloadDeserializer(), serializer: DefaultSerializer()));
   }
 
   void _init(Dio dio, OkMockServerImpl server, OkMockAdapter adapter) {
@@ -60,8 +59,7 @@ class OkMock extends Interceptor {
           data: mockPayload.body,
           statusCode: mockPayload.code,
           statusMessage: mockPayload.message,
-          headers: Headers()
-      ));
+          headers: Headers()));
 
       mockPayload.headers.forEach((key, value) {
         response.headers.add(key, value.toString());
@@ -82,8 +80,7 @@ class OkMock extends Interceptor {
 
     PartialRequestInfo info = PartialRequestInfo(method: method, url: url);
     OkMockPayload payload = mockResponses.firstWhere((element) {
-      return element.matcher.method == info.method &&
-          element.matcher.path.hasMatch(info.url);
+      return element.matcher.method == info.method && element.matcher.path.hasMatch(info.url);
     }, orElse: () => null);
 
     return payload;

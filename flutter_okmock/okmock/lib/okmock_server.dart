@@ -35,17 +35,16 @@ class OkMockServerImpl extends OkMockServer {
   }
 
   @override
-  void start() {
-    ServerSocket.bind(InternetAddress.anyIPv4, port)
-        .then((ServerSocket server) {
-      server.listen((client) {
-        this.serverSocket = server;
-        this.clientSocket = client;
-        this.clientSocket.listen((List<int> event) {
-          _onRead(new String.fromCharCodes(event).trim());
-        }, onDone: () {
-          client.destroy();
-        });
+  void start() async {
+    final server = await ServerSocket.bind(InternetAddress.anyIPv4, port);
+
+    server.listen((client) {
+      this.serverSocket = server;
+      this.clientSocket = client;
+      this.clientSocket.listen((List<int> event) {
+        _onRead(new String.fromCharCodes(event).trim());
+      }, onDone: () {
+        client.destroy();
       });
     });
   }

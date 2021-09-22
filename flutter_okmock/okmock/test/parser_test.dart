@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:okmock/OkMockPayload.dart' as OkMock;
+import 'package:okmock/okmock_payload.dart' as OkMock;
 
 void main() {
   test('parsing should be correct', () {

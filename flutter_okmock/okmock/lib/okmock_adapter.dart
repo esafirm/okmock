@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:intl/intl.dart';
 
-import 'OkMockPayload.dart';
+import 'okmock_payload.dart';
 import 'dart:developer' as developer;
 
 abstract class Deserializer {
