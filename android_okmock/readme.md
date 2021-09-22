@@ -4,7 +4,7 @@ OkHttp interceptor for mocking Android request
 
 ## Prerequisite
 
-- [gadb](https://github.com/esafirm/gadb)
+- [okmock-cli](https://github.com/esafirm/okmock/tree/main/okmock-cli)
 
 ## Quick Start
 
@@ -20,6 +20,7 @@ allprojects {
   }
 }
 ```
+
 ```
 dependencies {
   implementation 'com.github.esafirm:okmock:1.0.0'
@@ -36,7 +37,7 @@ OkHttpClient.Builder()
 
 ### Desktop Side
 
-1. After install `gadb`, create mock file
+1. After install `okmock-cli`, create mock file
 
 ```json
 {
@@ -48,7 +49,7 @@ OkHttpClient.Builder()
 }
 ```
 
-2. Run `gadb mock -f <file>`
+2. Run `okmcok -f <file>`
 
 That's it! Now every time a request is matching the `path` and `method`, your request will return `body`
 

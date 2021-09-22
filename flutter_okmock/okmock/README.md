@@ -4,7 +4,7 @@ Dio interceptor for mocking HTTP request in Flutter
 
 ## Prerequisite
 
-- [gadb](https://github.com/esafirm/gadb)
+- [okmock-cli](https://github.com/esafirm/okmock/tree/main/okmock-cli)
 
 ## Quick Start
 

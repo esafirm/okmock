@@ -6,7 +6,11 @@ HTTP Interceptor for mocking Android (OkHttp) and Flutter (Dio) request.
 
 ## Prerequisite
 
-- [gadb](https://github.com/esafirm/gadb)
+Install `okmock` with `brew`
+
+```
+$ brew install esafirm/tap/okmock
+```
 
 ## How-to
 
